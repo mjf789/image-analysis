@@ -1,4 +1,19 @@
-# Sorted Pictures, Part 1 and 2 Cropping, 30% too small
+# Project Overview:
+
+# The purpose of this project is to sort through 16,000 screenshots of instagram posts from junk food and health food companies.
+# The goals of this project are to detect which images have people in them, count how many people are in them, and detect each person's skin tone.
+
+# File Overview:
+
+# This project has 2 parts.
+
+# Part 1 takes in images and crops each one using edge detection with parts to safeguard against potential edge cases. Screenshots needed cropping because they included comment section information which would negatively influence the results.
+
+# Part 2 is the bulk of the project, which uses Detectron2 to both detect whether a person is in an image and segments them for skin detection. We used k-means clustering for skin-detection to avoid issues from other skin detectors.
+
+# Currently, the project is being improved. We are working on fine-tuning our person detection model by training it on our data, validating our k-means algorithm and selecting an appropriate skin tone scale (and have not used the elbow or silhouette methods yet) and expand our project to include image captioning abilities.
+
+# Part 1: Dynamic Image Cropper
 
 import os
 import cv2
@@ -65,7 +80,7 @@ def crop_image_vertically(image_path, output_folder, output_filename):
         print(f"OpenCV error occurred: {e}")
         return False
 
-# Part 2: Backup method using line or boundary detection
+# Backup method using line or boundary detection
 def save_cropped_image(cropped_img, output_folder, output_filename):
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
@@ -151,8 +166,7 @@ output_folder = '/Users/mattfranco/desktop/output_folder1'
 
 process_images(input_folder, white_folder, output_folder)
 
-
-# Coco Class Identification and Object Segmentation and Skin Tone
+# Part 2: People Detection and Skin Tone Classification
 
 import os
 import cv2
